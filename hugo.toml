@@ -1,3 +1,6 @@
-baseURL = 'https://example.org/'
-locale = 'en-us'
-title = 'My New Hugo Project'
+baseURL = 'http://localhost:1313/'
+languageCode = 'en-us'
+title = 'My Technical Artist Portfolio'
+
+# Explicitly register the static directory
+staticDir = ['static']
