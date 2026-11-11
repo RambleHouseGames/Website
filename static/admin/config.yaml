@@ -1,0 +1,20 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update
+
+media_folder: "static/images/uploads" # Where uploaded images/videos are stored
+public_folder: "/images/uploads" # Where Hugo looks for them
+
+collections:
+  - name: "projects"
+    label: "Portfolio Projects"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Role/Title", name: "role", widget: "string", default: "Lead Technical Artist" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Cover Video/Image", name: "thumbnail", widget: "file" }
+      - { label: "Tech Stack & Tools", name: "tags", widget: "list" }
+      - { label: "Project Breakdown", name: "body", widget: "markdown" }
