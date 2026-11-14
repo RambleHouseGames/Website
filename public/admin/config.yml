@@ -1,20 +1,65 @@
 backend:
   name: git-gateway
-  branch: main # Branch to update
+  branch: main
 
-media_folder: "static/images/uploads" # Where uploaded images/videos are stored
-public_folder: "/images/uploads" # Where Hugo looks for them
+local_backend: true
+
+# Global fallback media folder (used for About Me or standalone pages)
+media_folder: "assets/images"
+public_folder: "/images"
 
 collections:
+  # 1. PORTFOLIO PROJECTS (Self-Contained Page Bundles)
   - name: "projects"
     label: "Portfolio Projects"
     folder: "content/projects"
+    path: "{{slug}}/index"
+    media_folder: "" # Saves uploads directly inside content/projects/{{slug}}/
+    public_folder: "" # Writes clean relative paths (e.g., ![alt](capture.png))
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Role/Title", name: "role", widget: "string", default: "Lead Technical Artist" }
+      - { label: "Project Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Cover Video/Image", name: "thumbnail", widget: "file" }
-      - { label: "Tech Stack & Tools", name: "tags", widget: "list" }
-      - { label: "Project Breakdown", name: "body", widget: "markdown" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Card Summary", name: "summary", widget: "text" }
+      - label: "Hero & Card Cover Image"
+        name: "featureimage"
+        widget: "image"
+        hint: "Upload your main cover render here. Tip: Naming it 'featured.jpg' or 'featured.png' enables automatic card/hero detection."
+      - { label: "Hero Style", name: "heroStyle", widget: "hidden", default: "background" }
+      - { label: "Tools & Tech Stack", name: "tags", widget: "list", default: ["Unreal Engine 5", "HLSL"] }
+      - { label: "Case Study Breakdown", name: "body", widget: "markdown" }
+
+  # 2. BLOG / TECH NOTES (Self-Contained Page Bundles)
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "content/blog"
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Post Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Excerpt", name: "summary", widget: "text" }
+      - { label: "Cover Image (Optional)", name: "featureimage", widget: "image", required: false }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Post Content", name: "body", widget: "markdown" }
+
+  # 3. SINGLE PAGES (About Me)
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "About Me"
+        name: "about"
+        file: "content/about.md"
+        media_folder: "/assets/images/about"
+        public_folder: "/images/about"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string", default: "About Me" }
+          - { label: "Last Updated", name: "date", widget: "datetime" }
+          - { label: "Draft", name: "draft", widget: "boolean", default: false }
+          - { label: "Bio & Experience", name: "body", widget: "markdown" }

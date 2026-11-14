@@ -4,10 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio Content Manager</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
-    <!-- Include the script that builds the page and powers Decap CMS -->
+    <!-- Include the Decap CMS JS script -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+    <!-- Force Local Backend Mode -->
+    <script>
+      if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+        const netlifyIdentityWidget = document.createElement("script");
+        netlifyIdentityWidget.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
+        document.head.appendChild(netlifyIdentityWidget);
+      }
+    </script>
   </body>
 </html>
